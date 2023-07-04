@@ -2,7 +2,7 @@ const { expressjwt: jwt } = require("express-jwt");
 
 // Instantiate the JWT token validation middleware
 const isAuthenticated = jwt({
-  secret: process.env.TOKEN_SECRET,
+  secret: process.env.TOKEN_SECRET || "y0uRt0k3N$eCr3T",
   algorithms: ["HS256"],
   requestProperty: "payload",
   getToken: getTokenFromHeaders,

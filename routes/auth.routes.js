@@ -18,11 +18,13 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
   // Check if email or password or name are provided as empty strings
-  if (email === "" || password === "" || name === "") {
-    res.status(400).json({ message: "Provide email, password and name" });
+  if (email === "" || password === "" || firstName === "" || lastName === "") {
+    res
+      .status(400)
+      .json({ message: "Provide email, password, first and last name" });
     return;
   }
 
@@ -58,15 +60,20 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name });
+      return User.create({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+      });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { email, name, _id } = createdUser;
+      const { email, firstName, lastName, _id } = createdUser;
 
       // Create a new object that doesn't expose the password
-      const user = { email, name, _id };
+      const user = { email, firstName, lastName, _id };
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
@@ -98,16 +105,20 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, firstName, lastName } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
+        const payload = { _id, email, firstName, lastName };
 
         // Create a JSON Web Token and sign it
-        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-          algorithm: "HS256",
-          expiresIn: "6h",
-        });
+        const authToken = jwt.sign(
+          payload,
+          process.env.TOKEN_SECRET || "y0uRt0k3N$eCr3T",
+          {
+            algorithm: "HS256",
+            expiresIn: "6h",
+          }
+        );
 
         // Send the token as the response
         res.status(200).json({ authToken: authToken });
@@ -118,11 +129,24 @@ router.post("/login", (req, res, next) => {
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
 
+User.create({
+  email: "test@email1.com",
+  password: "ABC123",
+  firstName: "Max1",
+  lastName: "Test1",
+})
+  .then((user) => {
+    console.log("user created:", user);
+  })
+  .catch((error) => {
+    console.error("Error creating user", error);
+  });
+
 // GET  /auth/verify  -  Used to verify JWT stored on the client
 router.get("/verify", isAuthenticated, (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and is made available on `req.payload`
-  console.log(`req.payload`, req.payload);
+  // console.log(`req.payload`, req.payload);
 
   // Send back the token payload object containing the user data
   res.status(200).json(req.payload);
