@@ -1,8 +1,6 @@
 const { Schema, model } = require("mongoose");
 
 const teamSchema = new Schema({
-  _id: ObjectId,
-
   name: String,
   players: [
     {

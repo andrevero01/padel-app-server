@@ -22,10 +22,10 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
-const teamsRoutes = require("./routes/Teams/teams.routes");
+const teamsRoutes = require("./routes/team.routes");
 app.use("/api/teams", teamsRoutes);
 
-const leagueRouter = require("./routes/admin.league.route");
+const leagueRouter = require("./routes/league.routes");
 app.use("/api", leagueRouter);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Team = require("../../models/Team.model.js");
+const Team = require("../models/Team.model");
 
 // Route: GET /api/teams
 // Description: Get all teams
