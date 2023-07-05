@@ -1,23 +1,35 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
-const teamSchema = new Schema({
-  name: String,
-  players: [
-    {
+const teamSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    players: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Player",
+      },
+    ],
+    captain: {
       type: Schema.Types.ObjectId,
       ref: "Player",
     },
-  ],
-  league: {
-    type: Schema.Types.ObjectId,
-    ref: "League",
+    homeCourt: {
+      type: Schema.Types.ObjectId,
+      ref: "Court",
+    },
+    leagues: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "League",
+      },
+    ],
   },
-  statistics: {
-    wins: Number,
-    losses: Number,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Team = model("Team", teamSchema);
 
-module.exports = Team;
+module.exports = { Team };
