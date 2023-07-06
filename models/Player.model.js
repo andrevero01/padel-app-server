@@ -6,7 +6,10 @@ const playerSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
     },
-    name: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+    },
     age: {
       type: Number,
     },
@@ -43,19 +46,19 @@ const playerSchema = new Schema(
     coach: {
       type: String,
     },
-    tournaments: [
+    leagues: [
       {
         name: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: "League",
         },
         location: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: "League",
         },
-        date: {
-          type: Date,
-        },
-        result: {
-          type: String,
+        team: {
+          type: Schema.Types.ObjectId,
+          ref: "Team",
         },
       },
     ],
