@@ -5,6 +5,11 @@ const playerSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    role: {
+      type: String,
+      enum: ["User", "Player", "Captain"],
     },
     name: {
       type: String,
@@ -15,12 +20,14 @@ const playerSchema = new Schema(
     },
     gender: {
       type: String,
+      enum: ["Male", "Female", "Prefer not to say"],
     },
     nationality: {
       type: String,
     },
     team: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Team",
     },
     height: {
       type: Number,
@@ -30,15 +37,19 @@ const playerSchema = new Schema(
     },
     dominantHand: {
       type: String,
+      enum: ["Right", "Left", "Ambidextrous"],
     },
     backhandType: {
       type: String,
+      enum: ["One-handed backhand", "Two-handed backhand"],
     },
     playingStyle: {
       type: String,
+      enum: ["Offensive", "Control"],
     },
     experienceLevel: {
       type: Number,
+      enum: ["1", "2", "3", "4", "5"],
     },
     coach: {
       type: String,
