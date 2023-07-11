@@ -18,10 +18,10 @@ require("./config")(app);
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
-
+/*
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
-
+*/
 const teamsRoutes = require("./routes/team.routes");
 app.use("/api/teams", teamsRoutes);
 

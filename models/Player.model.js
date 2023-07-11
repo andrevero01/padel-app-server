@@ -19,10 +19,7 @@ const playerSchema = new Schema(
     nationality: {
       type: String,
     },
-    club: {
-      type: String,
-    },
-    handedness: {
+    team: {
       type: String,
     },
     height: {
@@ -41,7 +38,7 @@ const playerSchema = new Schema(
       type: String,
     },
     experienceLevel: {
-      type: String,
+      type: Number,
     },
     coach: {
       type: String,
@@ -59,16 +56,6 @@ const playerSchema = new Schema(
         team: {
           type: Schema.Types.ObjectId,
           ref: "Team",
-        },
-      },
-    ],
-    achievements: [
-      {
-        title: {
-          type: String,
-        },
-        year: {
-          type: Number,
         },
       },
     ],
