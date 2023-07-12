@@ -9,9 +9,13 @@ const playerSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["User", "Player", "Captain"],
+      enum: ["User", "Player", "Captain", ""],
     },
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -20,7 +24,7 @@ const playerSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["Male", "Female", "Prefer not to say"],
+      enum: ["Male", "Female", "Prefer not to say", ""],
     },
     nationality: {
       type: String,
@@ -37,19 +41,19 @@ const playerSchema = new Schema(
     },
     dominantHand: {
       type: String,
-      enum: ["Right", "Left", "Ambidextrous"],
+      enum: ["Right", "Left", "Ambidextrous", ""],
     },
     backhandType: {
       type: String,
-      enum: ["One-handed backhand", "Two-handed backhand"],
+      enum: ["One-handed backhand", "Two-handed backhand", ""],
     },
     playingStyle: {
       type: String,
-      enum: ["Offensive", "Control"],
+      enum: ["Offensive", "Control", ""],
     },
     experienceLevel: {
       type: Number,
-      enum: ["1", "2", "3", "4", "5"],
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     },
     coach: {
       type: String,
