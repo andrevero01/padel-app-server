@@ -31,6 +31,8 @@ router.post("/api/games", async (req, res) => {
   const game = new Game({
     player1: req.body.player1,
     player2: req.body.player2,
+    player3: req.body.player3,
+    player4: req.body.player4,
     court: req.body.court,
     league: req.body.league,
     team1: req.body.team1,

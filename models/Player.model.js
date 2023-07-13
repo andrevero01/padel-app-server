@@ -74,6 +74,12 @@ const playerSchema = new Schema(
         },
       },
     ],
+    games: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Game",
+      },
+    ],
   },
   {
     timestamps: true,
