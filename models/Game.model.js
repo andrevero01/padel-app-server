@@ -40,8 +40,20 @@ const gameSchema = new Schema(
       type: Date,
     },
     score: {
-      type: String,
-      default: "0-0",
+      rounds: [
+        {
+          sets: [
+            {
+              games: [
+                {
+                  type: String,
+                  default: "0-0",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     winners: {
       winner1: {
