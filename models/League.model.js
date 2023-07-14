@@ -21,7 +21,7 @@ const leagueSchema = new Schema(
     },
     schedule: {
       type: String,
-    }, // Calender API?
+    },
     registrationOpen: {
       type: Boolean,
       default: false,

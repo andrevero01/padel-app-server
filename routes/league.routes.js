@@ -64,6 +64,4 @@ router.delete("/leagues/:leagueId", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-//test
-
 module.exports = router;
