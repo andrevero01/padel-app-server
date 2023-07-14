@@ -13,9 +13,9 @@ const leagueSchema = new Schema(
         ref: "Team",
       },
     ],
-    season: {
-      type: String,
-    },
+    // season: {
+    //   type: String,
+    // },
     location: {
       type: String,
     },

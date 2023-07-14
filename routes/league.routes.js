@@ -6,8 +6,23 @@ const Team = require("../models/Team.model");
 
 //Create a new league
 router.post("/leagues", (req, res, next) => {
-  const { name, courts } = req.body;
-  League.create({ name, courts, teams: [] })
+  const {
+    name,
+    location,
+    schedule,
+    registrationOpen,
+    registrationDeadline,
+    registrationFee,
+  } = req.body;
+  League.create({
+    name,
+    teams: [],
+    location,
+    schedule,
+    registrationOpen,
+    registrationDeadline,
+    registrationFee,
+  })
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
