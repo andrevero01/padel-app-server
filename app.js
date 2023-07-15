@@ -26,13 +26,13 @@ const teamsRoutes = require("./routes/team.routes");
 app.use("/api/teams", teamsRoutes);
 
 const leagueRouter = require("./routes/league.routes");
-app.use("/api", leagueRouter);
+app.use("/api/leagues", leagueRouter);
 
 const gameRoutes = require("./routes/game.routes");
-app.use("/", gameRoutes);
+app.use("/api/games", gameRoutes);
 
 const playerRoutes = require("./routes/player.routes");
-app.use("/api", playerRoutes);
+app.use("/api/players", playerRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

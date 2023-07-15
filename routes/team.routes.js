@@ -6,7 +6,7 @@ const Team = require("../models/Team.model");
 // Description: Get all teams
 router.get("/", async (req, res) => {
   try {
-    const teams = await Team.find();
+    const teams = await Team.find().populate("players")
     res.json(teams);
   } catch (error) {
     res.status(500).json({ error: "Failed to get teams" });

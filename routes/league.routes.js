@@ -5,7 +5,7 @@ const League = require("../models/League.model");
 const Team = require("../models/Team.model");
 
 //Create a new league
-router.post("/leagues", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const { name, courts } = req.body;
   League.create({ name, courts, teams: [] })
     .then((response) => res.json(response))
@@ -13,7 +13,7 @@ router.post("/leagues", (req, res, next) => {
 });
 
 //Update a league
-router.put("/leagues/:leagueId", (req, res, next) => {
+router.put("/:leagueId", (req, res, next) => {
   const { leagueId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(leagueId)) {
@@ -27,7 +27,7 @@ router.put("/leagues/:leagueId", (req, res, next) => {
 });
 
 //Get all leagues
-router.get("/leagues", (req, res, next) => {
+router.get("/", (req, res, next) => {
   League.find()
     .populate("teams")
     .then((allLeagues) => res.json(allLeagues))
@@ -35,7 +35,7 @@ router.get("/leagues", (req, res, next) => {
 });
 
 //Get one league
-router.get("/leagues/:leagueId", (req, res, next) => {
+router.get("/:leagueId", (req, res, next) => {
   const { leagueId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(leagueId)) {
@@ -49,7 +49,7 @@ router.get("/leagues/:leagueId", (req, res, next) => {
 });
 
 //Delete a league
-router.delete("/leagues/:leagueId", (req, res, next) => {
+router.delete("/:leagueId", (req, res, next) => {
   const { leagueId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(leagueId)) {

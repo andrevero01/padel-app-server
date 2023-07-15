@@ -32,4 +32,4 @@ const teamSchema = new Schema(
 
 const Team = model("Team", teamSchema);
 
-module.exports = { Team };
+module.exports =  model("Team", teamSchema);
