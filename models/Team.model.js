@@ -31,6 +31,3 @@ const teamSchema = new Schema(
 );
 
 module.exports = model("Team", teamSchema);
-// const Team = model("Team", teamSchema);
-
-module.exports = model("Team", teamSchema);
