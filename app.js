@@ -23,7 +23,7 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 */
 const teamsRoutes = require("./routes/team.routes");
-app.use("/api/teams", teamsRoutes);
+app.use("/api", teamsRoutes);
 
 const leagueRouter = require("./routes/league.routes");
 app.use("/api", leagueRouter);

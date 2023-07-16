@@ -36,6 +36,31 @@ router.get("/players/:id", async (req, res) => {
   }
 });
 
+// Invite player to a team
+router.post("/players/invite/:playerId", async (req, res) => {
+  try {
+    const { playerId } = req.params;
+    const { teamId } = req.body;
+
+    const player = await Player.findById(playerId);
+    if (!player) {
+      return res.status(404).json({ error: "Player not found" });
+    }
+
+    const team = await Team.findById(teamId);
+    if (!team) {
+      return res.status(404).json({ error: "Team not found" });
+    }
+
+    player.team.push(team);
+    await player.save();
+
+    res.json({ message: "Player invited successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // Update a player
 router.put("/players/:id", async (req, res) => {
   try {
