@@ -3,7 +3,7 @@ const router = express.Router();
 const { Game } = require("../models/Game.model");
 
 // Get all games
-router.get("/api/games", async (req, res) => {
+router.get("/games", async (req, res) => {
   try {
     const games = await Game.find();
     res.json(games);
@@ -13,7 +13,7 @@ router.get("/api/games", async (req, res) => {
 });
 
 // Get a specific game
-router.get("/api/games/:id", async (req, res) => {
+router.get("/games/:id", async (req, res) => {
   try {
     const game = await Game.findById(req.params.id);
     if (game) {
@@ -27,7 +27,7 @@ router.get("/api/games/:id", async (req, res) => {
 });
 
 // Create a new game
-router.post("/api/games", async (req, res) => {
+router.post("/games", async (req, res) => {
   const game = new Game({
     player1: req.body.player1,
     player2: req.body.player2,
@@ -78,7 +78,7 @@ router.patch("/api/games/:id", async (req, res) => {
 });
 
 // Delete a game
-router.delete("/api/games/:id", async (req, res) => {
+router.delete("/games/:id", async (req, res) => {
   try {
     const game = await Game.findById(req.params.id);
     if (game) {
