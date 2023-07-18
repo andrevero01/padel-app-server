@@ -3,9 +3,20 @@ const { Schema, model } = mongoose;
 
 const playerSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    // username: {
+    //   type: String,
+    //   required: [true, "Username is required."],
+    // },
+    email: {
+      type: String,
+      // required: [true, "Email is required."],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      // required: [true, "Password is required."],
     },
     role: {
       type: String,

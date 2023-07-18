@@ -9,6 +9,8 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
@@ -27,6 +29,7 @@ app.use("/api/teams", teamsRoutes);
 
 const leagueRouter = require("./routes/league.routes");
 app.use("/api/leagues", leagueRouter);
+// app.use("/api/leagues", isAuthenticated, leagueRouter);
 
 const gameRoutes = require("./routes/game.routes");
 app.use("/api/games", gameRoutes);
