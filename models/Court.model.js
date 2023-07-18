@@ -73,4 +73,4 @@ const courtSchema = new Schema(
 
 const Court = model("Court", courtSchema);
 
-module.exports = { Court };
+module.exports = model("Court", courtSchema);
