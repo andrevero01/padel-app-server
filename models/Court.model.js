@@ -7,37 +7,64 @@ const courtSchema = new Schema(
       type: String,
       required: true,
     },
+    amenities: {
+      restrooms: {
+        type: Boolean,
+        default: false,
+      },
+      showers: {
+        type: Boolean,
+        default: false,
+      },
+      lockerRooms: {
+        type: Boolean,
+        default: false,
+      },
+      waterFountain: {
+        type: Boolean,
+        default: false,
+      },
+      snackBar: {
+        type: Boolean,
+        default: false,
+      },
+      equipmentRental: {
+        type: Boolean,
+        default: false,
+      },
+      scoreboard: {
+        type: Boolean,
+        default: false,
+      },
+      firstAidKit: {
+        type: Boolean,
+        default: false,
+      },
+      parking: {
+        type: Boolean,
+        default: false,
+      }
+    },
     lighting: {
       type: String,
+      enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
     surface: {
       type: String,
-    },
-    size: {
-      type: String,
-    },
-    nets: {
-      type: String,
+      enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
     seating: {
-      type: Boolean,
+      type: String,
+      enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
-    amenities: [
-      {
-        type: String,
-      },
-    ],
     cleanliness: {
       type: String,
+      enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
     maintenance: {
       type: String,
+      enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
-    rating: {
-      type: Number,
-      min: 1,
-      max: 5,
-    }, // Rating given by players (1-5 scale)
   },
   {
     timestamps: true,
@@ -46,4 +73,4 @@ const courtSchema = new Schema(
 
 const Court = model("Court", courtSchema);
 
-module.exports = { Court };
+module.exports = model("Court", courtSchema);

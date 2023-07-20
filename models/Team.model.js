@@ -14,10 +14,12 @@ const teamSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Player",
     },
-    homeCourt: {
-      type: Schema.Types.ObjectId,
-      ref: "Court",
-    },
+    courts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Court",
+      },
+    ],
     leagues: [
       {
         type: Schema.Types.ObjectId,
@@ -30,6 +32,4 @@ const teamSchema = new Schema(
   }
 );
 
-const Team = model("Team", teamSchema);
-
-module.exports = { Team };
+module.exports = model("Team", teamSchema);

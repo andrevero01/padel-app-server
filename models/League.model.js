@@ -21,7 +21,7 @@ const leagueSchema = new Schema(
     },
     schedule: {
       type: String,
-    }, // Calender API?
+    },
     registrationOpen: {
       type: Boolean,
       default: false,
@@ -32,12 +32,15 @@ const leagueSchema = new Schema(
     registrationFee: {
       type: Number,
     },
+    leagueLogo: {
+      type: String,
+      default:
+        "https://www.usaclicosenza.it/wp-content/uploads/2021/04/Padel-League-Logo.jpeg",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const League = model("League", leagueSchema);
-
-module.exports = { League };
+module.exports = model("League", leagueSchema);

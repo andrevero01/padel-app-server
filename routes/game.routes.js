@@ -3,7 +3,8 @@ const router = express.Router();
 const { Game } = require("../models/Game.model");
 
 // Get all games
-router.get("/api/games", async (req, res) => {
+
+router.get("/", async (req, res) => {
   try {
     const games = await Game.find();
     res.json(games);
@@ -13,7 +14,8 @@ router.get("/api/games", async (req, res) => {
 });
 
 // Get a specific game
-router.get("/api/games/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
+
   try {
     const game = await Game.findById(req.params.id);
     if (game) {
@@ -27,10 +29,13 @@ router.get("/api/games/:id", async (req, res) => {
 });
 
 // Create a new game
-router.post("/api/games", async (req, res) => {
+
+router.post("/", async (req, res) => {
   const game = new Game({
     player1: req.body.player1,
     player2: req.body.player2,
+    player3: req.body.player3,
+    player4: req.body.player4,
     court: req.body.court,
     league: req.body.league,
     team1: req.body.team1,
@@ -50,7 +55,7 @@ router.post("/api/games", async (req, res) => {
 });
 
 // Update a game
-router.patch("/api/games/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     const game = await Game.findById(req.params.id);
     if (game) {
@@ -76,7 +81,8 @@ router.patch("/api/games/:id", async (req, res) => {
 });
 
 // Delete a game
-router.delete("/api/games/:id", async (req, res) => {
+
+router.delete("/:id", async (req, res) => {
   try {
     const game = await Game.findById(req.params.id);
     if (game) {

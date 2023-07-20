@@ -9,6 +9,8 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
@@ -18,21 +20,25 @@ require("./config")(app);
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
-
+/*
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
-
+*/
 const teamsRoutes = require("./routes/team.routes");
-app.use("/api/teams", teamsRoutes);
+app.use("/api", teamsRoutes);
 
 const leagueRouter = require("./routes/league.routes");
-app.use("/api", leagueRouter);
+app.use("/api/leagues", leagueRouter);
+// app.use("/api/leagues", isAuthenticated, leagueRouter);
 
 const gameRoutes = require("./routes/game.routes");
-app.use("/", gameRoutes);
+app.use("/api/games", gameRoutes);
 
 const playerRoutes = require("./routes/player.routes");
-app.use("/api", playerRoutes);
+app.use("/api/players", playerRoutes);
+
+const courtRoutes = require("./routes/court.routes");
+app.use("/api", courtRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
