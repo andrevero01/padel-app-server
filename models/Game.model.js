@@ -1,89 +1,43 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
 const gameSchema = new Schema(
   {
-    players: {
-      player1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player3: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player4: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-    },
-    court: {
-      type: Schema.Types.ObjectId,
-      ref: "Court",
-    },
-    league: {
-      type: Schema.Types.ObjectId,
-      ref: "League",
-    },
-    team1: {
-      type: Schema.Types.ObjectId,
-      ref: "Team",
-    },
-    team2: {
-      type: Schema.Types.ObjectId,
-      ref: "Team",
-    },
-    dateTime: {
+    date: {
       type: Date,
     },
+    teams: [
+      {
+        players: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "Player",
+          },
+        ],
+      },
+    ],
     score: {
-      rounds: [
-        {
-          sets: [
-            {
-              games: [
-                {
-                  type: String,
-                  default: "0-0",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    winners: {
-      winner1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
+      sets: {
+        type: Number,
+        enum: [1, 3, 5, 7],
       },
-      winner2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
+      games: {
+        type: Number,
+        enum: [1, 2, 3, 4, 5, 6],
+      },
+      points: {
+        type: String,
+        enum: [15, 30, 40, "advantage", "deuce"],
       },
     },
-    losers: {
-      loser1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      loser2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-    },
-    duration: {
-      type: Number,
+    courts: {
+      type: Schema.Types.ObjectId,
+      ref: "Court",
     },
   },
   {
     timestamps: true,
   }
 );
-
-const Game = model("Game", gameSchema);
 
 module.exports = model("Game", gameSchema);

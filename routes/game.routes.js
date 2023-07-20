@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Game } = require("../models/Game.model");
+const Game = require("../models/Game.model");
 
 // Get all games
 

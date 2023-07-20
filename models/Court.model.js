@@ -65,6 +65,9 @@ const courtSchema = new Schema(
       type: String,
       enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
+    address: {
+      type: String,
+    },
   },
   {
     timestamps: true,
