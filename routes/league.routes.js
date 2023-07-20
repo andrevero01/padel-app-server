@@ -45,16 +45,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//Get all leagues
-router.get("/", async (req, res, next) => {
-  try {
-    const leagues = await League.find().populate("teams");
-    res.json(leagues);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
 //Get one league
 router.get("/:leagueId", async (req, res, next) => {
   const { leagueId } = req.params;

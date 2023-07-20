@@ -27,9 +27,12 @@ app.use("/auth", authRoutes);
 const teamsRoutes = require("./routes/team.routes");
 app.use("/api", teamsRoutes);
 
-const leagueRouter = require("./routes/league.routes");
-app.use("/api/leagues", leagueRouter);
-// app.use("/api/leagues", isAuthenticated, leagueRouter);
+const authRoutes = require("./routes/auth.routes");
+app.use("/api/auth", authRoutes);
+
+const leagueRoutes = require("./routes/league.routes");
+app.use("/api/leagues", leagueRoutes);
+// app.use("/api/leagues", , leagueRouter);
 
 const gameRoutes = require("./routes/game.routes");
 app.use("/api/games", gameRoutes);
