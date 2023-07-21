@@ -8,32 +8,40 @@ const gameSchema = new Schema(
     },
     teams: [
       {
+        name: {
+          type: String,
+        },
         players: [
           {
             type: Schema.Types.ObjectId,
             ref: "Player",
           },
         ],
+        winner: {
+          type: Boolean,
+        },
+        score: {
+          sets: {
+            type: Number,
+            enum: [0, 1, 3, 5, 7],
+          },
+          games: {
+            type: Number,
+            enum: [0, 1, 2, 3, 4, 5, 6],
+          },
+          points: {
+            type: String,
+            enum: [0, 15, 30, 40, "advantage", "deuce"],
+          },
+        },
       },
     ],
-    score: {
-      sets: {
-        type: Number,
-        enum: [1, 3, 5, 7],
+    courts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Court",
       },
-      games: {
-        type: Number,
-        enum: [1, 2, 3, 4, 5, 6],
-      },
-      points: {
-        type: String,
-        enum: [15, 30, 40, "advantage", "deuce"],
-      },
-    },
-    courts: {
-      type: Schema.Types.ObjectId,
-      ref: "Court",
-    },
+    ],
   },
   {
     timestamps: true,
