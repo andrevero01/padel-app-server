@@ -9,13 +9,15 @@ const leagueSchema = new Schema(
     },
     teams: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Team",
+        players: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "Player",
+          },
+        ],
       },
     ],
-    season: {
-      type: String,
-    },
+
     location: {
       type: String,
     },
