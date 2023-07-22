@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Game = require("../models/Game.model");
+const Player = require("../models/Player.model");
 
 // Get all games
 
@@ -27,12 +28,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Create a new game
-
+// Post a game
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+    const { teams } = req.body;
     const game = await Game.create(req.body);
+
+    for (const team of teams) {
+      for (const player of team.players) {
+        await Player.findByIdAndUpdate(player, {
+          $push: { games: game._id },
+        });
+      }
+    }
+
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ error: error.message });
