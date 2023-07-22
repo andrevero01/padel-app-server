@@ -7,17 +7,13 @@ const leagueSchema = new Schema(
       type: String,
       required: true,
     },
-    teams: [
+    teams: [{ type: Schema.Types.ObjectId, ref: "Team" }],
+    players: [
       {
-        players: [
-          {
-            type: Schema.Types.ObjectId,
-            ref: "Player",
-          },
-        ],
+        type: Schema.Types.ObjectId,
+        ref: "Player",
       },
     ],
-
     location: {
       type: String,
     },
