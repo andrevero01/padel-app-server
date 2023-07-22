@@ -34,8 +34,6 @@ router.post("/teams", async (req, res) => {
   try {
     console.log(req.body);
     const team = await Team.create(req.body);
-
-    // Update each player's teams array with the newly created team's ObjectId
     const playerIds = team.players.map((player) => player._id);
     await Player.updateMany(
       { _id: { $in: playerIds } },
