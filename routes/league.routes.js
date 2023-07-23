@@ -86,41 +86,35 @@ router.delete("/:leagueId", async (req, res, next) => {
 });
 
 //POST Join a league
-router.post("/leagues/:leagueId/join", async (req, res) => {
+router.post("/:leagueId/join", (req, res) => {
   const { leagueId } = req.params;
-  const playerId = req.player.id;
+  const { playerId } = req.body;
+  League.findById(leagueId)
+    .then((league) => {
+      if (!league) {
+        return res.status(404).json({ error: "League not found." });
+      }
+      // Check if the league's registration is open
+      if (!league.registrationOpen) {
+        return res
+          .status(403)
+          .json({ error: "League registration is closed." });
+      }
+      // Check if the user is already a member of the league
+      // if (league.players.some((player) => player.players.includes(playerId))) {
+      //   res
+      //     .status(409)
+      //     .json({ error: "You are already a member of this league." });
+      // }
 
-  try {
-    // Fetch the league from the database
-    const league = await League.findById(leagueId);
-
-    if (!league) {
-      return res.status(404).json({ error: "League not found." });
-    }
-
-    // Check if the league's registration is open
-    if (!league.registrationOpen) {
-      return res.status(403).json({ error: "League registration is closed." });
-    }
-
-    // Check if the user is already a member of the league
-    if (league.teams.some((team) => team.players.includes(playerId))) {
-      return res
-        .status(409)
-        .json({ error: "You are already a member of this league." });
-    }
-
-    // Add the user's ID to the "teams" array of the league
-    league.teams.push({ players: [playerId] });
-    await league.save();
-
-    return res.json({ message: "Successfully joined the league." });
-  } catch (err) {
-    console.error(err);
-    return res
-      .status(500)
-      .json({ error: "An error occurred while joining the league." });
-  }
+      console.log("player id", playerId);
+      league.players.push(playerId);
+      league.save();
+      res.json({ message: "Successfully joined the league." });
+    })
+    .catch((err) => {
+      console.error("An error occurred while joining the league.", err.message);
+    });
 });
 
 module.exports = router;
