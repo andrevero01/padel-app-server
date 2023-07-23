@@ -34,14 +34,22 @@ router.post("/", async (req, res) => {
     const { teams } = req.body;
     const game = await Game.create(req.body);
 
+    console.log(teams);
+
     for (const team of teams) {
       for (const player of team.players) {
         await Player.findByIdAndUpdate(player, {
           $push: { games: game._id },
         });
       }
+      if (team.winner === true) {
+        for (const player of team.players) {
+          await Player.findByIdAndUpdate(player, {
+            $push: { gamesWon: game._id },
+          });
+        }
+      }
     }
-
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ error: error.message });
