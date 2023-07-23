@@ -39,6 +39,12 @@ router.post("/", async (req, res) => {
         await Player.findByIdAndUpdate(player, {
           $push: { games: game._id },
         });
+        const winningTeam = game.teams.find((team) => team.winner === true);
+        if (winningTeam) {
+          await Player.findByIdAndUpdate(player, {
+            $push: { gamesWon: game._id },
+          });
+        }
       }
     }
 

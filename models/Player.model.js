@@ -93,6 +93,12 @@ const playerSchema = new Schema(
         ref: "Game",
       },
     ],
+    gamesWon: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Game",
+      },
+    ],
   },
   {
     timestamps: true,
