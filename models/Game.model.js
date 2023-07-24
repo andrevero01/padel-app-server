@@ -23,7 +23,7 @@ const gameSchema = new Schema(
         score: {
           sets: {
             type: Number,
-            enum: [0, 1, 3, 5, 7],
+            enum: [0, 1, 2, 3, 4, 5, 6, 7],
           },
           games: {
             type: Number,
@@ -42,6 +42,10 @@ const gameSchema = new Schema(
         ref: "Court",
       },
     ],
+    matchType: {
+      type: String,
+      enum: ["Singles", "Doubles", "Mixed doubles", "Practice", ""],
+    },
   },
   {
     timestamps: true,
