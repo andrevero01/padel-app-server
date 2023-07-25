@@ -44,7 +44,7 @@ const gameSchema = new Schema(
     ],
     matchType: {
       type: String,
-      enum: ["Singles", "Doubles", "Mixed doubles", "Practice", ""],
+      enum: ["Singles", "Doubles", "Mixed doubles", "Practice"],
     },
   },
   {
