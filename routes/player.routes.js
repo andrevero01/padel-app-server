@@ -83,8 +83,8 @@ router.get("/:id", async (req, res) => {
     const player = await Player.findById(req.params.id).populate({
       path: "games",
       populate: {
-        path: "teams.players", // Specify the correct path to the players field in teams array
-        model: "Player", // Specify the model for the players field (Player model)
+        path: "teams.players",
+        model: "Player",
       },
     });
     if (player) {
