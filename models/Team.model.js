@@ -26,6 +26,10 @@ const teamSchema = new Schema(
         ref: "League",
       },
     ],
+    wins: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
