@@ -7,13 +7,63 @@ const Player = require("../models/Player.model");
 
 //POST Create a new league
 router.post("/", async (req, res, next) => {
+  const {
+    name,
+    location,
+    schedule,
+    leagueLogo,
+    registrationOpen,
+    registrationDeadline,
+    registrationFee,
+    createdBy,
+  } = req.body;
   try {
-    const league = await League.create(req.body);
+    const league = await League.create({
+      name,
+      location,
+      schedule,
+      leagueLogo,
+      registrationOpen,
+      registrationDeadline,
+      registrationFee,
+      createdBy,
+    });
+    console.log("created by", createdBy);
     res.status(201).json(league);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
+
+// router.post("/", (req, res, next) => {
+//   const {
+//     name,
+//     location,
+//     schedule,
+//     leagueLogo,
+//     registrationOpen,
+//     registrationDeadline,
+//     registrationFee,
+//     createdBy,
+//   } = req.body;
+//   League.create({
+//     name,
+//     location,
+//     schedule,
+//     leagueLogo,
+//     registrationOpen,
+//     registrationDeadline,
+//     registrationFee,
+//     createdBy,
+//   })
+//     .then(() => {
+//       console.log("created by", createdBy);
+//     })
+
+//     .catch((error) => {
+//       console.log("error", error.message);
+//     });
+// });
 
 //PUT Update league
 router.put("/:leagueId", async (req, res, next) => {
@@ -95,11 +145,9 @@ router.post("/:leagueId/join", async (req, res) => {
 
   try {
     const [league, player] = await Promise.all([
-      League.findById(leagueId).populate("players"),
-      Player.findById(playerId),
+      League.findById(leagueId).populate("teams").populate("players"),
+      Player.findById(playerId).populate("leagues"),
     ]);
-    console.log("League:", league);
-    console.log("Player:", player);
     console.log("player id", playerId);
 
     if (!league || !player) {
@@ -109,12 +157,22 @@ router.post("/:leagueId/join", async (req, res) => {
     if (!league.registrationOpen) {
       return res.status(403).json({ error: "League registration is closed." });
     }
+    if (league.players.find((player) => player.id === playerId)) {
+      return res
+        .status(409)
+        .json({ error: "You are already a member of this league." });
+    } else if (league.teams.find((player) => player.id === playerId)) {
+      return res
+        .status(409)
+        .json({ error: "Your team is already a member of this league." });
+    }
 
     league.players.push(playerId);
     await league.save();
-
     player.leagues.push(leagueId);
     await player.save();
+    league.teams.push(leagueId);
+    await league.save();
 
     return res.json({ message: "Successfully joined the league." });
   } catch (err) {
