@@ -80,7 +80,13 @@ router.get("/", async (req, res) => {
 // Get a single player by ID
 router.get("/:id", async (req, res) => {
   try {
-    const player = await Player.findById(req.params.id);
+    const player = await Player.findById(req.params.id).populate({
+      path: "games",
+      populate: {
+        path: "teams.players",
+        model: "Player",
+      },
+    });
     if (player) {
       res.json(player);
     } else {
