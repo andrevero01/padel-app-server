@@ -118,6 +118,23 @@ router.get("/:leagueId", async (req, res, next) => {
   }
 });
 
+//GET only the players leagues
+router.get("/player", async (req, res, next) => {
+  const { playerId, playerLeagueId } = req.query;
+
+  try {
+    const leagueIds = playerLeagueId.split(",");
+    const leagues = await League.find({
+      players: playerId,
+      _id: { $in: leagueIds },
+    }).populate("teams").populate("players");
+
+    res.json(leagues);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 //DELETE league
 router.delete("/:leagueId", async (req, res, next) => {
   const { leagueId } = req.params;
