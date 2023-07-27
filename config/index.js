@@ -1,5 +1,6 @@
 // We reuse this import in order to have access to the `body` property in requests
 const express = require("express");
+const s3 = require("./awsConfig");
 
 // ℹ️ Responsible for the messages you see in the terminal as requests are coming in
 // https://www.npmjs.com/package/morgan
