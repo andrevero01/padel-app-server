@@ -35,36 +35,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// router.post("/", (req, res, next) => {
-//   const {
-//     name,
-//     location,
-//     schedule,
-//     leagueLogo,
-//     registrationOpen,
-//     registrationDeadline,
-//     registrationFee,
-//     createdBy,
-//   } = req.body;
-//   League.create({
-//     name,
-//     location,
-//     schedule,
-//     leagueLogo,
-//     registrationOpen,
-//     registrationDeadline,
-//     registrationFee,
-//     createdBy,
-//   })
-//     .then(() => {
-//       console.log("created by", createdBy);
-//     })
-
-//     .catch((error) => {
-//       console.log("error", error.message);
-//     });
-// });
-
 //PUT Update league
 router.put("/:leagueId", async (req, res, next) => {
   const { leagueId } = req.params;
