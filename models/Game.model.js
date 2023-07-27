@@ -42,12 +42,10 @@ const gameSchema = new Schema(
         ref: "Court",
       },
     ],
-    leagues: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "League",
-      },
-    ],
+    leagues: {
+      type: Schema.Types.ObjectId,
+      ref: "League",
+    },
     matchType: {
       type: String,
       enum: ["Singles", "Doubles", "Mixed doubles", "Practice", "League Game"],
