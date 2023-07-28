@@ -68,6 +68,10 @@ const courtSchema = new Schema(
     address: {
       type: String,
     },
+    picture: {
+      type: String, 
+      default: "/sliderRulesPics/Screenshot 2023-07-27 111530.png",
+    },
   },
   {
     timestamps: true,
