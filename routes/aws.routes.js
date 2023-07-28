@@ -25,6 +25,7 @@ router.get("/url", async (req, res) => {
     };
 
     const uploadURL = await s3.getSignedUrlPromise("putObject", params);
+
     res.json({ uploadURL });
   } catch (error) {
     console.error("Error generating upload URL:", error.message);
