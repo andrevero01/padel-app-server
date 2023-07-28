@@ -30,6 +30,10 @@ const teamSchema = new Schema(
       type: Number,
       default: 0,
     },
+    logo: {
+      type: String, 
+      default: "https://img.freepik.com/free-vector/hand-drawn-padel-logo-template_23-2149196492.jpg?w=2000",
+    },
   },
   {
     timestamps: true,
