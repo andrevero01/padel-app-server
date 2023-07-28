@@ -45,6 +45,7 @@ const gameSchema = new Schema(
     leagues: {
       type: Schema.Types.ObjectId,
       ref: "League",
+      required: false,
     },
     matchType: {
       type: String,
