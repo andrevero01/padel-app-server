@@ -7,18 +7,11 @@ const leagueSchema = new Schema(
       type: String,
       required: true,
     },
-    teams: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Team",
-      },
-    ],
-    season: {
-      type: String,
-    },
     location: {
       type: String,
     },
+    teams: [{ type: Schema.Types.ObjectId, ref: "Team" }],
+    players: [{ type: Schema.Types.ObjectId, ref: "Player" }],
     schedule: {
       type: String,
     },
@@ -27,7 +20,7 @@ const leagueSchema = new Schema(
       default: false,
     },
     registrationDeadline: {
-      type: Date,
+      type: String,
     },
     registrationFee: {
       type: Number,
@@ -37,6 +30,7 @@ const leagueSchema = new Schema(
       default:
         "https://www.usaclicosenza.it/wp-content/uploads/2021/04/Padel-League-Logo.jpeg",
     },
+    createdBy: [{ type: Schema.Types.ObjectId, ref: "Player" }],
   },
   {
     timestamps: true,

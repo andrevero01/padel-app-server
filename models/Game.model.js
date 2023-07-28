@@ -1,89 +1,59 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
 const gameSchema = new Schema(
   {
-    players: {
-      player1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player3: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      player4: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
+    date: {
+      type: Date,
     },
-    court: {
-      type: Schema.Types.ObjectId,
-      ref: "Court",
-    },
-    league: {
+    teams: [
+      {
+        name: {
+          type: String,
+        },
+        players: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "Player",
+          },
+        ],
+        winner: {
+          type: Boolean,
+        },
+        score: {
+          sets: {
+            type: Number,
+            enum: [0, 1, 2, 3, 4, 5, 6, 7],
+          },
+          games: {
+            type: Number,
+            enum: [0, 1, 2, 3, 4, 5, 6],
+          },
+          points: {
+            type: String,
+            enum: [0, 15, 30, 40, "advantage", "deuce"],
+          },
+        },
+      },
+    ],
+    courts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Court",
+      },
+    ],
+    leagues: {
       type: Schema.Types.ObjectId,
       ref: "League",
     },
-    team1: {
-      type: Schema.Types.ObjectId,
-      ref: "Team",
-    },
-    team2: {
-      type: Schema.Types.ObjectId,
-      ref: "Team",
-    },
-    dateTime: {
-      type: Date,
-    },
-    score: {
-      rounds: [
-        {
-          sets: [
-            {
-              games: [
-                {
-                  type: String,
-                  default: "0-0",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    winners: {
-      winner1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      winner2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-    },
-    losers: {
-      loser1: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-      loser2: {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
-      },
-    },
-    duration: {
-      type: Number,
+    matchType: {
+      type: String,
+      enum: ["Singles", "Doubles", "Mixed doubles", "Practice", "League Game"],
     },
   },
   {
     timestamps: true,
   }
 );
-
-const Game = model("Game", gameSchema);
 
 module.exports = model("Game", gameSchema);

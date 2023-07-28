@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const Team = require("../models/Team.model");
+const Player = require("../models/Player.model");
 
 // Route: GET /api/teams
 // Description: Get all teams
 router.get("/teams", async (req, res) => {
   try {
-    const teams = await Team.find().populate("players")
+    const teams = await Team.find().populate("players");
     res.json(teams);
   } catch (error) {
     res.status(500).json({ error: "Failed to get teams" });
@@ -33,9 +34,15 @@ router.post("/teams", async (req, res) => {
   try {
     console.log(req.body);
     const team = await Team.create(req.body);
+    const playerIds = team.players.map((player) => player._id);
+    await Player.updateMany(
+      { _id: { $in: playerIds } },
+      { $push: { team: team._id } }
+    );
+
     res.status(201).json(team);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: req.body });
   }
 });
 

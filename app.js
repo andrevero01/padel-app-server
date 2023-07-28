@@ -27,9 +27,12 @@ app.use("/auth", authRoutes);
 const teamsRoutes = require("./routes/team.routes");
 app.use("/api", teamsRoutes);
 
-const leagueRouter = require("./routes/league.routes");
-app.use("/api/leagues", leagueRouter);
-// app.use("/api/leagues", isAuthenticated, leagueRouter);
+const authRoutes = require("./routes/auth.routes");
+app.use("/api/auth", authRoutes);
+
+const leagueRoutes = require("./routes/league.routes");
+app.use("/api/leagues", leagueRoutes);
+// app.use("/api/leagues", , leagueRouter);
 
 const gameRoutes = require("./routes/game.routes");
 app.use("/api/games", gameRoutes);
@@ -39,6 +42,9 @@ app.use("/api/players", playerRoutes);
 
 const courtRoutes = require("./routes/court.routes");
 app.use("/api", courtRoutes);
+
+const awsRoutes = require("./routes/aws.routes");
+app.use("/api/s3", awsRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

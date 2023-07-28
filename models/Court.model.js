@@ -65,6 +65,13 @@ const courtSchema = new Schema(
       type: String,
       enum: ["Excellent", "Very good ", "Good", "Fair", "Poor"],
     },
+    address: {
+      type: String,
+    },
+    picture: {
+      type: String, 
+      default: "/sliderRulesPics/Screenshot 2023-07-27 111530.png",
+    },
   },
   {
     timestamps: true,

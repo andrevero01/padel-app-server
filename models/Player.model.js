@@ -92,13 +92,17 @@ const playerSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Game",
       },
+      { timestamps: true }
+    ],
+    gamesWon: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Game",
+      },
     ],
   },
   {
     timestamps: true,
   }
 );
-
-const Player = model("Player", playerSchema);
-
 module.exports = model("Player", playerSchema);

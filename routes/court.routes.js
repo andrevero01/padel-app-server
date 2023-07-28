@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Court } = require("../models/Court.model");
+const Court = require("../models/Court.model");
 
 router.get("/courts", async (req, res) => {
   try {
@@ -15,8 +15,8 @@ router.get("/courts", async (req, res) => {
 // Description: Get a specific team by ID
 router.get("/courts/:id", async (req, res) => {
   try {
-    const team = await Court.findById(req.params.id);
-    if (!team) {
+    const court = await Court.findById(req.params.id);
+    if (!court) {
       return res.status(404).json({ error: "Court not found" });
     }
     res.json(court);

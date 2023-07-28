@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Game } = require("../models/Game.model");
+const Game = require("../models/Game.model");
+const Player = require("../models/Player.model");
 
 // Get all games
 
@@ -15,7 +16,6 @@ router.get("/", async (req, res) => {
 
 // Get a specific game
 router.get("/:id", async (req, res) => {
-
   try {
     const game = await Game.findById(req.params.id);
     if (game) {
@@ -28,55 +28,46 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Create a new game
-
+// Post a game
 router.post("/", async (req, res) => {
-  const game = new Game({
-    player1: req.body.player1,
-    player2: req.body.player2,
-    player3: req.body.player3,
-    player4: req.body.player4,
-    court: req.body.court,
-    league: req.body.league,
-    team1: req.body.team1,
-    team2: req.body.team2,
-    dateTime: req.body.dateTime,
-    score: req.body.score,
-    winner: req.body.winner,
-    duration: req.body.duration,
-  });
-
   try {
-    const newGame = await game.save();
-    res.status(201).json(newGame);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    const { teams } = req.body;
+    const game = await Game.create(req.body);
+
+    console.log(teams);
+
+    for (const team of teams) {
+      for (const player of team.players) {
+        await Player.findByIdAndUpdate(player, {
+          $push: { games: game._id },
+        });
+      }
+      if (team.winner === true) {
+        for (const player of team.players) {
+          await Player.findByIdAndUpdate(player, {
+            $push: { gamesWon: game._id },
+          });
+        }
+      }
+    }
+    res.status(201).json(game);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 
 // Update a game
-router.patch("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const game = await Game.findById(req.params.id);
-    if (game) {
-      game.player1 = req.body.player1;
-      game.player2 = req.body.player2;
-      game.court = req.body.court;
-      game.league = req.body.league;
-      game.team1 = req.body.team1;
-      game.team2 = req.body.team2;
-      game.dateTime = req.body.dateTime;
-      game.score = req.body.score;
-      game.winner = req.body.winner;
-      game.duration = req.body.duration;
-
-      const updatedGame = await game.save();
-      res.json(updatedGame);
-    } else {
-      res.status(404).json({ message: "Game not found" });
+    const game = await Game.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!game) {
+      return res.status(404).json({ error: "Game not found" });
     }
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.json(game);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update game" });
   }
 });
 
